@@ -7,8 +7,9 @@ A quick acronym lookup tool.
 Alphabet Soup uses an Excel spreadsheet as the data source. It will automatically
 refresh data every time the spreadsheet is saved.
 
-The spreadsheet is expected to contain acronyms in column A starting in Row 5 and
-definitions in column B.
+The spreadsheet is expected to contain a sheet named "AlphabetSoup" with acronyms 
+in column A starting in Row 5 and definitions in column B. Feel free to edit the
+code to reflect your existing spreadsheet.
 
 ## Getting Started
 
