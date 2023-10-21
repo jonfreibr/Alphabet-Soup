@@ -18,7 +18,7 @@ import pickle
 from datetime import datetime
 import pytz
 
-progver = 'v 1.0'
+progver = 'v 1.01'
 mainTheme = 'GreenTan'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
@@ -207,9 +207,12 @@ def find_acronym():
             quit_now = time_warning(quit_time, user_config)
         if quit_now:
             break
-        if updated != datetime.fromtimestamp(os.path.getmtime(args.file)).strftime("%m/%d/%y @ %H:%M"):
-            aList, dList, updated = get_data(args)
-            fList = []
+        try:
+            if updated != datetime.fromtimestamp(os.path.getmtime(args.file)).strftime("%m/%d/%y @ %H:%M"):
+                aList, dList, updated = get_data(args)
+                fList = []
+        except:
+            pass
             
         event, values = window.read(timeout=5000)
         winLoc = window.CurrentLocation()
@@ -295,5 +298,8 @@ if __name__ == '__main__':
 """Change log:
 
     v 1.0           : Yeah, that. Based on IQT v1.1(b) and the PySimpleGui typeahead demo code.
+    v 1.01          : VPN latency was causing the program to crash if it couldn't see the source file
+                    :   to check for update. Placed that section of code into a try/except block. It
+                    :   still needs to see the file on start-up.
     
 """
