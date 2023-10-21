@@ -55,6 +55,8 @@ jfreivald@brmedical.com
 
 * 1.0
     * Initial Release
+* 1.01
+    * First bug -- a network latency/vpn connectivity hiccup
 
 ## License
 
