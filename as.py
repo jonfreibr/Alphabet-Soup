@@ -18,7 +18,7 @@ import pickle
 from datetime import datetime
 import pytz
 
-progver = 'v 1.02'
+progver = 'v 1.02(a)'
 mainTheme = 'GreenTan'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
@@ -176,7 +176,8 @@ def find_acronym():
     quit_now = False
     now = datetime.now(tz_NY)
     input_width = 20
-    num_items_to_show = 4
+    num_items_to_show = 5
+    num_defs_to_show = 3
     
     aList = [] # Acronym List
     dList = [] # Definition List
@@ -186,7 +187,7 @@ def find_acronym():
     sg.theme(user_config['Theme'])
     
     layout = [  [sg.Menu(menu_def, text_color='black', font='SYSTEM_DEFAULT', pad=(10,10))],
-                [sg.Input(size=(input_width, 1), enable_events=True, key='-IN-'), sg.Listbox(values = fList, size=(100, 2), key='-OUT-')],
+                [sg.Input(size=(input_width, 1), enable_events=True, key='-IN-'), sg.Listbox(values = fList, size=(100, num_defs_to_show), key='-OUT-')],
                 [sg.pin(sg.Col([[sg.Listbox(values=[], size=(input_width, num_items_to_show), enable_events=True, key='-BOX-',
                                     select_mode=sg.LISTBOX_SELECT_MODE_SINGLE, no_scrollbar=True)]],
                        key='-BOX-CONTAINER-', pad=(0, 0), visible=False))],
@@ -302,5 +303,6 @@ if __name__ == '__main__':
                     :   to check for update. Placed that section of code into a try/except block. It
                     :   still needs to see the file on start-up.
     v 1.02          : Changed button from 'Done' to 'Quit' to alleviate user confusion.
+    v 1.02(a)       : Minor layout tweaks.
     
 """
