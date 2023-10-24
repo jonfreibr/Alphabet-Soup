@@ -18,7 +18,7 @@ import pickle
 from datetime import datetime
 import pytz
 
-progver = 'v 1.01'
+progver = 'v 1.02'
 mainTheme = 'GreenTan'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
@@ -190,7 +190,7 @@ def find_acronym():
                 [sg.pin(sg.Col([[sg.Listbox(values=[], size=(input_width, num_items_to_show), enable_events=True, key='-BOX-',
                                     select_mode=sg.LISTBOX_SELECT_MODE_SINGLE, no_scrollbar=True)]],
                        key='-BOX-CONTAINER-', pad=(0, 0), visible=False))],
-                [sg.Button('Done'), sg.Push(), sg.Text('Copyright (C) Blue Ridge Medical Center, 2023')] ]
+                [sg.Button('Quit'), sg.Push(), sg.Text('Copyright (C) Blue Ridge Medical Center, 2023')] ]
     
     window = sg.Window(f'Alphabet Soup Acronym Lookup Tool {progver}', layout, return_keyboard_events=True, location=winLoc, finalize=True)
 
@@ -217,8 +217,8 @@ def find_acronym():
         event, values = window.read(timeout=5000)
         winLoc = window.CurrentLocation()
 
-        if event in (sg.WINDOW_CLOSED, 'Done'): # if user closes window
-            if event == 'Done':     # If they "x-out" of the window, there is an error trying to get window.CurrentLocation()
+        if event in (sg.WINDOW_CLOSED, 'Quit'): # if user closes window
+            if event == 'Quit':     # If they "x-out" of the window, there is an error trying to get window.CurrentLocation()
                 user_config['winLoc'] = winLoc
                 write_user_settings(user_config)
             break
@@ -301,5 +301,6 @@ if __name__ == '__main__':
     v 1.01          : VPN latency was causing the program to crash if it couldn't see the source file
                     :   to check for update. Placed that section of code into a try/except block. It
                     :   still needs to see the file on start-up.
+    v 1.02          : Changed button from 'Done' to 'Quit' to alleviate user confusion.
     
 """
