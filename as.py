@@ -42,7 +42,7 @@ def get_args():
 		help='The soup. (source spreadsheet)',
 		metavar='filename',
 		type=str,
-		default='\\\\brmc-fs2012.int.brmedical.com\\STAFF\\Jon\\Administrative\\BRMC Acronyms.xlsx')
+		default='//brmc-fs2012.int.brmedical.com/STAFF/Jon/Administrative/BRMC Acronyms.xlsx')
 
 	args = parser.parse_args()
 
