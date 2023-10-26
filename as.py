@@ -18,16 +18,11 @@ import pickle
 from datetime import datetime
 import pytz
 
-progver = 'v 1.02(a)'
-mainTheme = 'GreenTan'
+progver = 'v 1.03'
+mainTheme = 'Kayak'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
 tz_NY = pytz.timezone('America/New_York')
-
-# Give them a few color scheme choices. Not too many! Anything here has to be added in the event handler!
-menu_def = [
-            ['Theme', ['Dark', 'BrightColors', 'DarkAmber', 'DarkBlue7', 'DarkBlue8', 'DarkTeal7', 'DarkBrown3', 'DarkGreen4', 'DarkGreen7', 'Green', 'GreenTan']]
-            ]
 
 # --------------------------------------------------
 def get_args():
@@ -166,11 +161,12 @@ def time_warning(quit_time, user_config):
 # --------------------------------------------------
 def find_acronym():
 
-    winLoc = (2, 2)
     args = get_args()
     user_config = get_user_settings()
     if 'winLoc' in user_config:
         winLoc = user_config['winLoc']
+    else:
+        winLoc = (2, 2)
     warn_time = '21:25'
     quit_time = '21:30'
     quit_now = False
@@ -178,6 +174,13 @@ def find_acronym():
     input_width = 20
     num_items_to_show = 5
     num_defs_to_show = 3
+
+    menu_def = [
+                ['Theme', [sg.theme_list()]]
+                ]
+    menu_dispatcher = {}
+    for t in sg.theme_list():
+        menu_dispatcher[t] = check_theme
     
     aList = [] # Acronym List
     dList = [] # Definition List
@@ -266,29 +269,9 @@ def find_acronym():
             window['-IN-'].update(value=values['-BOX-'])
             window['-BOX-CONTAINER-'].update(visible=False)
             
-        # Color theme choices here -- must correspond with "menu_def"
-        elif event == 'Dark':
-            check_theme(event, user_config, winLoc)
-        elif event == 'BrightColors':
-            check_theme(event, user_config, winLoc)
-        elif event == 'DarkAmber':
-            check_theme(event, user_config, winLoc)
-        elif event == 'DarkBlue7':
-            check_theme(event, user_config, winLoc)
-        elif event == 'DarkBlue8':
-            check_theme(event, user_config, winLoc)
-        elif event == 'DarkTeal7':
-            check_theme(event, user_config, winLoc)
-        elif event == 'DarkBrown3':
-            check_theme(event, user_config, winLoc)
-        elif event == 'DarkGreen4':
-            check_theme(event, user_config, winLoc)
-        elif event == 'DarkGreen7':
-            check_theme(event, user_config, winLoc)
-        elif event == 'Green':
-            check_theme(event, user_config, winLoc)
-        elif event == 'GreenTan':
-            check_theme(event, user_config, winLoc)
+        elif event in menu_dispatcher:
+            menu_dispatcher[event](event, user_config, winLoc)
+        
     
     window.close()
 
@@ -304,5 +287,8 @@ if __name__ == '__main__':
                     :   still needs to see the file on start-up.
     v 1.02          : Changed button from 'Done' to 'Quit' to alleviate user confusion.
     v 1.02(a)       : Minor layout tweaks.
+    v 1.02(b)       : Minor refactoring.
+    v 1.03          : Completely redid Theme menu -- now pulls all available themes from PySimpleGui
+                    :   as options for the users to choose.
     
 """
