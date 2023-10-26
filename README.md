@@ -1,8 +1,12 @@
 # Alphabet Soup
 
-A quick acronym lookup tool. 
+A quick acronym lookup tool.
 
 ## Description
+
+Stop paging through lists or scrolling through listings of thousands of acronyms!
+The idea for this tool hit me when my acronym sheet hit 3 pages -- my collection
+is now over 8000 and growing.
 
 Alphabet Soup uses an Excel spreadsheet as the data source. It will automatically
 refresh data every time the spreadsheet is saved.
@@ -14,9 +18,11 @@ code to reflect your existing spreadsheet.
 ## Getting Started
 
 Create your spreadsheet, add some acronyms and definitions, and launch. Instead of
-scrolling through a long list (my list is already > 500 acronyms long, hence the need
-for a better way!), you simply type-in to the acronym you need. The search is not
-case sensitive. Once started, you can use the arrow keys to scroll up and down the
+scrolling through a long list (my list is already > 8000 acronyms long, hence the need
+for a better way!), you simply type-in to the acronym you need. Typing the first letter
+starts a predictive list showing you the first 5 choices based on what you type. The
+more you type, the more precise the list gets. The search is not case sensitive. Once 
+you have started typing, you can use the arrow keys to scroll up and down the
 predictive list.
 
 ### Dependencies
@@ -38,8 +44,8 @@ predictive list.
 ### Executing program
 
 * python as.py
-* python as.py -f an\alternate\spreadsheet.xls
-* python as.py --file an\alternate\spreadsheet.xls
+* python as.py -f an/alternate/spreadsheet.xls
+* python as.py --file an/alternate/spreadsheet.xls
 
 ## Help
 
@@ -57,6 +63,10 @@ jfreivald@brmedical.com
     * Initial Release
 * 1.01
     * First bug -- a network latency/vpn connectivity hiccup
+* 1.02
+    * Aparently "Done" was confusing, so changed button text to "Quit"
+* 1.02(a)
+    * Minor layout tweaks.
 
 ## License
 
