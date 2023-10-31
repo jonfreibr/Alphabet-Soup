@@ -18,7 +18,7 @@ import pickle
 from datetime import datetime
 import pytz
 
-progver = 'v 1.03'
+progver = 'v 1.03(a)'
 mainTheme = 'Kayak'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
@@ -176,7 +176,8 @@ def find_acronym():
     num_defs_to_show = 3
 
     menu_def = [
-                ['Theme', [sg.theme_list()]]
+                ['&Theme', [sg.theme_list()]],
+                [user_config['Theme'], []]
                 ]
     menu_dispatcher = {}
     for t in sg.theme_list():
@@ -290,5 +291,6 @@ if __name__ == '__main__':
     v 1.02(b)       : Minor refactoring.
     v 1.03          : Completely redid Theme menu -- now pulls all available themes from PySimpleGui
                     :   as options for the users to choose.
+    v 1.03(a)       : Added display of currently selected theme to menu bar.
     
 """
