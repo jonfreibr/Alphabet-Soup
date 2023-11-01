@@ -18,7 +18,7 @@ import pickle
 from datetime import datetime
 import pytz
 
-progver = 'v 1.03(b)'
+progver = 'v 1.03(c)'
 mainTheme = 'Kayak'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
@@ -308,5 +308,6 @@ if __name__ == '__main__':
                     :   as options for the users to choose.
     v 1.03(a)       : Added display of currently selected theme to menu bar.
     v 1.03(b)       : Change theme now takes effect immediately.
+    v 1.03(c)       : Minor tweak to dynamic theme scheme. Window will only respawn if theme was actually changed.
     
 """
