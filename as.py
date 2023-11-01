@@ -18,7 +18,7 @@ import pickle
 from datetime import datetime
 import pytz
 
-progver = 'v 1.03(a)'
+progver = 'v 1.03(b)'
 mainTheme = 'Kayak'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
@@ -124,7 +124,7 @@ def check_theme(theme, user_config, winLoc):
     list2 = ['American Automobile Association', 'Better Business Bureau', 'Internal Revenue Serivce']
 
     sg.theme(theme)
-    layout = [ [sg.Text('Themes take effect the next time you start the app.')],
+    layout = [ [sg.Text('Themes take effect immediately.')],
                 [sg.Listbox(values = list1, size=(5, 3), key='folks', default_values=list1[0]), sg.Listbox(values = list2, size=(25, 3), key='places', default_values=list1[0])],
                 [sg.Button('Keep'), sg.Button('Cancel')] ]
     window = sg.Window('Theme sampler', layout, location=winLoc, element_justification='center', finalize=True)
@@ -272,6 +272,19 @@ def find_acronym():
             
         elif event in menu_dispatcher:
             menu_dispatcher[event](event, user_config, winLoc)
+            menu_def = [
+                ['&Theme', [sg.theme_list()]],
+                [user_config['Theme'], []]
+                ]
+            sg.theme(user_config['Theme'])
+            layout = [  [sg.Menu(menu_def, text_color='black', font='SYSTEM_DEFAULT', pad=(10,10))],
+                [sg.Input(size=(input_width, 1), enable_events=True, key='-IN-'), sg.Listbox(values = fList, size=(100, num_defs_to_show), key='-OUT-')],
+                [sg.pin(sg.Col([[sg.Listbox(values=[], size=(input_width, num_items_to_show), enable_events=True, key='-BOX-',
+                                    select_mode=sg.LISTBOX_SELECT_MODE_SINGLE, no_scrollbar=True)]],
+                       key='-BOX-CONTAINER-', pad=(0, 0), visible=False))],
+                [sg.Button('Quit'), sg.Push(), sg.Text('Copyright (C) Blue Ridge Medical Center, 2023')] ]
+            window.close()
+            window = sg.Window(f'Alphabet Soup Acronym Lookup Tool {progver}', layout, return_keyboard_events=True, location=winLoc, finalize=True)
         
     
     window.close()
@@ -292,5 +305,6 @@ if __name__ == '__main__':
     v 1.03          : Completely redid Theme menu -- now pulls all available themes from PySimpleGui
                     :   as options for the users to choose.
     v 1.03(a)       : Added display of currently selected theme to menu bar.
+    v 1.03(b)       : Change theme now takes effect immediately.
     
 """
