@@ -18,7 +18,7 @@ import pickle
 from datetime import datetime
 import pytz
 
-progver = 'v 1.03(c)'
+progver = 'v 1.03(d)'
 mainTheme = 'Kayak'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
@@ -201,7 +201,7 @@ def find_acronym():
 
     list_element:sg.Listbox = window.Element('-BOX-')           # store listbox element for easier access and to get to docstrings
     prediction_list, input_text, sel_item = [], "", 0
-
+    window['-IN-'].set_focus()
     window.BringToFront()
 
     while True:
@@ -287,7 +287,12 @@ def find_acronym():
                     [sg.Button('Quit'), sg.Push(), sg.Text('Copyright (C) Blue Ridge Medical Center, 2023')] ]
                 window.close()
                 window = sg.Window(f'Alphabet Soup Acronym Lookup Tool {progver}', layout, return_keyboard_events=True, location=winLoc, finalize=True)
-        
+                list_element:sg.Listbox = window.Element('-BOX-')           # store listbox element for easier access and to get to docstrings
+                prediction_list, input_text, sel_item = [], "", 0
+                window.BringToFront()
+                window['-OUT-'].update("")
+                window['-IN-'].set_focus()
+                
     
     window.close()
 
@@ -309,5 +314,5 @@ if __name__ == '__main__':
     v 1.03(a)       : Added display of currently selected theme to menu bar.
     v 1.03(b)       : Change theme now takes effect immediately.
     v 1.03(c)       : Minor tweak to dynamic theme scheme. Window will only respawn if theme was actually changed.
-    
+    v 1.03(d)       : Fixed bug in window respawn scheme.
 """
