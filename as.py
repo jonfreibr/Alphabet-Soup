@@ -18,7 +18,7 @@ import pickle
 from datetime import datetime
 import pytz
 
-progver = 'v 1.03(d)'
+progver = 'v 1.03(e)'
 mainTheme = 'Kayak'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
@@ -240,7 +240,7 @@ def find_acronym():
             sel_item = (sel_item + (len(prediction_list) -1)) % len(prediction_list)
             list_element.update(set_to_index=sel_item, scroll_to_index=sel_item)
             
-        elif event == '\r':
+        elif event == '\r' or event.startswith('Return'):
             if len(values['-BOX-']) > 0:
                 window['-IN-'].update(value=values['-BOX-'])
                 window['-BOX-CONTAINER-'].update(visible=False)
@@ -315,4 +315,5 @@ if __name__ == '__main__':
     v 1.03(b)       : Change theme now takes effect immediately.
     v 1.03(c)       : Minor tweak to dynamic theme scheme. Window will only respawn if theme was actually changed.
     v 1.03(d)       : Fixed bug in window respawn scheme.
+    v 1.03(e)       : Updated event capturing return key to perform cross-platform.
 """
