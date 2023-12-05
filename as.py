@@ -5,7 +5,6 @@ Author  : Jon Freivald <jfreivald@brmedical.com>
         : Copyright (C) Blue Ridge Medical Center, 2023
         : License: GNU GPL Version 3
 Date    : 2023-10-20
-        : Last update 2023-10-20
 Purpose : Acronym Lookup Tool
         : Version change log at EoF.
 """
@@ -316,4 +315,5 @@ if __name__ == '__main__':
     v 1.03(c)       : Minor tweak to dynamic theme scheme. Window will only respawn if theme was actually changed.
     v 1.03(d)       : Fixed bug in window respawn scheme.
     v 1.03(e)       : Updated event capturing return key to perform cross-platform.
+				    : 231205	: Added date to comments, because I always forget to update it in the header.
 """
