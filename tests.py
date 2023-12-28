@@ -13,6 +13,7 @@ class TestCases(unittest.TestCase):
     
     def test_unique_list(self):
         self.assertTrue(s.unique_list(self.testList) == ["Joe", "Bill", "Larry", "Fred"])
+        self.assertFalse(s.unique_list(self.testList) == ["Joe", "Bill", "Larry", "Joe", "Fred", "Bill"])
         self.assertFalse(s.unique_list(self.testList) == ["Bob"])
 
     def test_filter_data(self):
