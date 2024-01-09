@@ -17,7 +17,7 @@ import pickle
 from datetime import datetime
 import pytz
 
-progver = 'v 1.03(e)'
+progver = 'v 1.03(f)'
 mainTheme = 'Kayak'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
@@ -72,7 +72,7 @@ def get_data(args):
             definition = currentSheet[cellB].value
             aList.append(acronym)
             dList.append([acronym, definition])
-    return unique_list(aList), dList, updated
+    return sorted(unique_list(aList)), sorted(dList), updated
 
 # --------------------------------------------------
 def filter_data(acronym, dList):
@@ -316,4 +316,6 @@ if __name__ == '__main__':
     v 1.03(d)       : Fixed bug in window respawn scheme.
     v 1.03(e)       : Updated event capturing return key to perform cross-platform.
 				    : 231205	: Added date to comments, because I always forget to update it in the header.
+    v 1.03(f)       : 240109    : Added sort to data instead of depending on source sort. This eliminated having to arrow/mouse down to items
+                                : that should have been under the selection highlight.
 """
