@@ -30,7 +30,7 @@ def get_args():
 	parser = argparse.ArgumentParser(
 		description='Alphabet Soup (Acronym Lookup Tool)',
 		formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-
+    
 	parser.add_argument('-f',
 		'--file',
 		help='The soup. (source spreadsheet)',
@@ -318,4 +318,6 @@ if __name__ == '__main__':
 				    : 231205	: Added date to comments, because I always forget to update it in the header.
     v 1.03(f)       : 240109    : Added sort to data instead of depending on source sort. This eliminated having to arrow/mouse down to items
                                 : that should have been under the selection highlight.
+                    : 240112    : Created testdata.xlsx and updated tests.py to perform all tests using data in this file. DO NOT modify the
+                                : spreadsheet without updating tests to match. No code changes to program source.
 """
