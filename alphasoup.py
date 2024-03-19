@@ -200,7 +200,7 @@ def find_acronym():
                 [sg.pin(sg.Col([[sg.Listbox(values=[], size=(input_width, num_items_to_show), enable_events=True, key='-BOX-',
                                     select_mode=sg.LISTBOX_SELECT_MODE_SINGLE, no_scrollbar=True)]],
                        key='-BOX-CONTAINER-', pad=(0, 0), visible=False))],
-                [sg.Button('Quit'), sg.Push(), sg.Text('Copyright (C) Blue Ridge Medical Center, 2023')] ]
+                [sg.Button('Quit'), sg.Push(), sg.Text('Copyright (C) Blue Ridge Medical Center, 2023, 2024')] ]
     
     window = sg.Window(f'Alphabet Soup Acronym Lookup Tool {progver}', layout, return_keyboard_events=True, location=winLoc, finalize=True)
 
@@ -289,7 +289,7 @@ def find_acronym():
                     [sg.pin(sg.Col([[sg.Listbox(values=[], size=(input_width, num_items_to_show), enable_events=True, key='-BOX-',
                                         select_mode=sg.LISTBOX_SELECT_MODE_SINGLE, no_scrollbar=True)]],
                         key='-BOX-CONTAINER-', pad=(0, 0), visible=False))],
-                    [sg.Button('Quit'), sg.Push(), sg.Text('Copyright (C) Blue Ridge Medical Center, 2023')] ]
+                    [sg.Button('Quit'), sg.Push(), sg.Text('Copyright (C) Blue Ridge Medical Center, 2023, 2024')] ]
                 window.close()
                 window = sg.Window(f'Alphabet Soup Acronym Lookup Tool {progver}', layout, return_keyboard_events=True, location=winLoc, finalize=True)
                 list_element:sg.Listbox = window.Element('-BOX-')           # store listbox element for easier access and to get to docstrings
