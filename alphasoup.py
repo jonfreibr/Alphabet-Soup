@@ -17,11 +17,15 @@ import pickle
 from datetime import datetime
 import pytz
 
-progver = 'v 1.03(f)'
+progver = 'v 1.03(g)'
 mainTheme = 'Kayak'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
 tz_NY = pytz.timezone('America/New_York')
+
+theme_list = ['BlueMono', 'BluePurple', 'BrightColors', 'DarkAmber', 'DarkBlue3', 'DarkGreen', 'DarkGreen6', 'DarkGrey4', 'DarkGrey5',
+	'DarkTeal1', 'Green', 'GreenMono', 'GreenTan', 'Kayak', 'LightBlue1', 'LightBlue2', 'LightBrown3', 'LightBrown4',
+	'LightGreen', 'LightGreen5', 'LightPurple', 'LightTeal', 'Purple', 'SandyBeach']
 
 # --------------------------------------------------
 def get_args():
@@ -175,7 +179,7 @@ def find_acronym():
     num_defs_to_show = 3
 
     menu_def = [
-                ['&Theme', [sg.theme_list()]],
+                ['&Theme', theme_list],
                 [user_config['Theme'], []]
                 ]
     menu_dispatcher = {}
@@ -274,7 +278,7 @@ def find_acronym():
             menu_dispatcher[event](event, user_config, winLoc)
             if old_theme != user_config['Theme']:
                 menu_def = [
-                    ['&Theme', [sg.theme_list()]],
+                    ['&Theme', theme_list],
                     [user_config['Theme'], []]
                     ]
                 sg.theme(user_config['Theme'])
@@ -320,4 +324,6 @@ if __name__ == '__main__':
                                 : that should have been under the selection highlight.
                     : 240112    : Created testdata.xlsx and updated tests.py to perform all tests using data in this file. DO NOT modify the
                                 : spreadsheet without updating tests to match. No code changes to program source.
+    v 1.03(g)       : 240319    : Reverted to manual list of themes. It keeps the list selectable under all relevant
+                                : operating systems instead of going off screen and becoming unselectable.
 """
