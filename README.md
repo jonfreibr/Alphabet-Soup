@@ -28,7 +28,7 @@ predictive list.
 ### Dependencies
 
 * Python (3.11.5)
-* PySimpleGui (4.60.5)
+* PySimpleGui (4.60.5) (Distribution key for 5.0 is installed, since 4.x is sunsetted q2 2024)
 * openpyxl (3.1.2)
 * pytz (2023.3)
 
