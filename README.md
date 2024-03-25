@@ -59,6 +59,11 @@ jfreivald@brmedical.com
 
 ## Version History
 
+* v 1.03(i)
+    * Refactored theme management code to utilize a make_window() function, eliminating much redundant code is respawning
+    the window when the theme changes. Theme changes are still immediate.
+* v 1.03(h)
+    * Added license key for and tested with PiSimpleGUI 5.0
 * v 1.03(g)
     * 240319    : Reverted themes to a manual list of select themes to address a cross-platform issue
     where a multi-screen long list was unselectable. Update the list to your favorites.
