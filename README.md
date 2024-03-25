@@ -60,7 +60,7 @@ jfreivald@brmedical.com
 ## Version History
 
 * v 1.03(i)
-    * Refactored theme management code to utilize a make_window() function, eliminating much redundant code is respawning
+    * Refactored theme management code to utilize a make_window() function, eliminating much redundant code in respawning
     the window when the theme changes. Theme changes are still immediate.
 * v 1.03(h)
     * Added license key for and tested with PiSimpleGUI 5.0
