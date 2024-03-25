@@ -20,15 +20,27 @@ import pickle
 from datetime import datetime
 import pytz
 
-progver = 'v 1.03(i)'
+progver = 'v 1.03(j)'
 mainTheme = 'Kayak'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
 tz_NY = pytz.timezone('America/New_York')
 
-theme_list = ['BlueMono', 'BluePurple', 'BrightColors', 'DarkAmber', 'DarkBlue3', 'DarkGreen', 'DarkGreen6', 'DarkGrey4', 'DarkGrey5',
-	'DarkTeal1', 'Green', 'GreenMono', 'GreenTan', 'Kayak', 'LightBlue1', 'LightBlue2', 'LightBrown3', 'LightBrown4',
-	'LightGreen', 'LightGreen5', 'LightPurple', 'LightTeal', 'Purple', 'SandyBeach']
+BRMC = {'BACKGROUND': '#73afb6',
+                 'TEXT': '#00446a',
+                 'INPUT': '#ffcf01',
+                 'TEXT_INPUT': '#00446a',
+                 'SCROLL': '#ce7067',
+                 'BUTTON': ('#ffcf01', '#00446a'),
+                 'PROGRESS': ('#ffcf01', '#00446a'),
+                 'BORDER': 1, 'SLIDER_DEPTH': 0, 'PROGRESS_DEPTH': 0,
+                 }
+sg.theme_add_new('BRMC', BRMC)
+
+
+theme_list = ['BRMC', 'BlueMono', 'BluePurple', 'BrightColors', 'DarkAmber', 'DarkBlue3', 'DarkGreen', 'DarkGreen6',
+    'DarkGrey4', 'DarkGrey5', 'DarkTeal1', 'Green', 'GreenMono', 'GreenTan', 'Kayak', 'LightBlue1', 'LightBlue2',
+    'LightBrown3', 'LightBrown4', 'LightGreen', 'LightGreen5', 'LightPurple', 'LightTeal', 'Purple', 'SandyBeach']
 
 # --------------------------------------------------
 def get_args():
@@ -313,4 +325,5 @@ if __name__ == '__main__':
     v 1.03(i)       : 240323    : Refactored to use make_window() function, eliminating the need to duplicate code to make theme changes
                                 : immediate. 
                                 : Identified issue that Escape key is not recognized by event loop on MacOSX -- need to test on Linux.
+    v 1.03(j)       : 240325    : Added BRMC colors theme.
 """

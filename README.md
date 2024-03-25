@@ -59,6 +59,8 @@ jfreivald@brmedical.com
 
 ## Version History
 
+* v 1.03(j)
+    * Added BRMC colors based theme
 * v 1.03(i)
     * Refactored theme management code to utilize a make_window() function, eliminating much redundant code in respawning
     the window when the theme changes. Theme changes are still immediate.
