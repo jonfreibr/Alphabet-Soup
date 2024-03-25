@@ -20,7 +20,7 @@ import pickle
 from datetime import datetime
 import pytz
 
-progver = 'v 1.03(h)'
+progver = 'v 1.03(i)'
 mainTheme = 'Kayak'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
@@ -149,38 +149,35 @@ def check_theme(theme, user_config, winLoc):
     window.close()
 
 # --------------------------------------------------
-def time_warning(quit_time, user_config):
+def make_window(menu_def, user_config, fList):
 
-    sg.theme(errorTheme)
-    layout = [ [sg.Text(f'Program auto-closing at {quit_time}')],
-                [sg.Button('Cancel', bind_return_key=True)] ]
-    window = sg.Window('Error Message', layout, location=user_config['winLoc'], modal=True, finalize=True)
-    while True:
-        event, values = window.read(timeout=500)
-        now = datetime.now(tz_NY)
-        if event in (sg.WIN_CLOSED, 'Cancel'): # if user closes window or clicks abort
-            window.close()
-            return False
-        if now.strftime("%H:%M") == quit_time:
-            return True
+    if 'winLoc' in user_config:
+        winLoc = user_config['winLoc']
+    else:
+        winLoc = (2, 2)
+
+    input_width = 20
+    num_items_to_show = 5
+    num_defs_to_show = 3
+
+    sg.theme(user_config['Theme'])
+    
+    layout = [  [sg.Menu(menu_def, text_color='black', font='SYSTEM_DEFAULT', pad=(10,10))],
+                [sg.Input(size=(input_width, 1), enable_events=True, key='-IN-'), sg.Listbox(values = fList, size=(100, num_defs_to_show), key='-OUT-')],
+                [sg.pin(sg.Col([[sg.Listbox(values=[], size=(input_width, num_items_to_show), enable_events=True, key='-BOX-',
+                                    select_mode=sg.LISTBOX_SELECT_MODE_SINGLE, no_scrollbar=True)]],
+                       key='-BOX-CONTAINER-', pad=(0, 0), visible=False))],
+                [sg.Button('Quit'), sg.Push(), sg.Text('Copyright (C) Blue Ridge Medical Center, 2023, 2024')] ]
+    
+    return sg.Window(f'Alphabet Soup Acronym Lookup Tool {progver}', layout, return_keyboard_events=True, location=winLoc, resizable=True, finalize=True)
+
 
 # --------------------------------------------------
 def find_acronym():
 
     args = get_args()
     user_config = get_user_settings()
-    if 'winLoc' in user_config:
-        winLoc = user_config['winLoc']
-    else:
-        winLoc = (2, 2)
-    warn_time = '21:25'
-    quit_time = '21:30'
-    quit_now = False
-    now = datetime.now(tz_NY)
-    input_width = 20
-    num_items_to_show = 5
-    num_defs_to_show = 3
-
+    
     menu_def = [
                 ['&Theme', theme_list],
                 [user_config['Theme'], []]
@@ -194,16 +191,7 @@ def find_acronym():
     fList = [] # Filtered List
     aList, dList, updated = get_data(args)
 
-    sg.theme(user_config['Theme'])
-    
-    layout = [  [sg.Menu(menu_def, text_color='black', font='SYSTEM_DEFAULT', pad=(10,10))],
-                [sg.Input(size=(input_width, 1), enable_events=True, key='-IN-'), sg.Listbox(values = fList, size=(100, num_defs_to_show), key='-OUT-')],
-                [sg.pin(sg.Col([[sg.Listbox(values=[], size=(input_width, num_items_to_show), enable_events=True, key='-BOX-',
-                                    select_mode=sg.LISTBOX_SELECT_MODE_SINGLE, no_scrollbar=True)]],
-                       key='-BOX-CONTAINER-', pad=(0, 0), visible=False))],
-                [sg.Button('Quit'), sg.Push(), sg.Text('Copyright (C) Blue Ridge Medical Center, 2023, 2024')] ]
-    
-    window = sg.Window(f'Alphabet Soup Acronym Lookup Tool {progver}', layout, return_keyboard_events=True, location=winLoc, finalize=True)
+    window = make_window(menu_def, user_config, fList)
 
     list_element:sg.Listbox = window.Element('-BOX-')           # store listbox element for easier access and to get to docstrings
     prediction_list, input_text, sel_item = [], "", 0
@@ -211,13 +199,6 @@ def find_acronym():
     window.BringToFront()
 
     while True:
-        # Force everyone out once per night so we can do updates as needed.
-        # This only works if the users system does not sleep! Publish the need to log out on the user group!
-        now = datetime.now(tz_NY)
-        if now.strftime("%H:%M") == warn_time:
-            quit_now = time_warning(quit_time, user_config)
-        if quit_now:
-            break
         try:
             if updated != datetime.fromtimestamp(os.path.getmtime(args.file)).strftime("%m/%d/%y @ %H:%M"):
                 aList, dList, updated = get_data(args)
@@ -225,8 +206,12 @@ def find_acronym():
         except:
             pass
             
-        event, values = window.read(timeout=5000)
+        window['-OUT-'].expand(expand_x=True, expand_y=True, expand_row=True)
+        event, values = window.read()
+    
         winLoc = window.CurrentLocation()
+
+        # print(event)
 
         if event in (sg.WINDOW_CLOSED, 'Quit'): # if user closes window
             if event == 'Quit':     # If they "x-out" of the window, there is an error trying to get window.CurrentLocation()
@@ -280,24 +265,19 @@ def find_acronym():
             old_theme = user_config['Theme']
             menu_dispatcher[event](event, user_config, winLoc)
             if old_theme != user_config['Theme']:
+                window.close()
                 menu_def = [
                     ['&Theme', theme_list],
                     [user_config['Theme'], []]
-                    ]
-                sg.theme(user_config['Theme'])
-                layout = [  [sg.Menu(menu_def, text_color='black', font='SYSTEM_DEFAULT', pad=(10,10))],
-                    [sg.Input(size=(input_width, 1), enable_events=True, key='-IN-'), sg.Listbox(values = fList, size=(100, num_defs_to_show), key='-OUT-')],
-                    [sg.pin(sg.Col([[sg.Listbox(values=[], size=(input_width, num_items_to_show), enable_events=True, key='-BOX-',
-                                        select_mode=sg.LISTBOX_SELECT_MODE_SINGLE, no_scrollbar=True)]],
-                        key='-BOX-CONTAINER-', pad=(0, 0), visible=False))],
-                    [sg.Button('Quit'), sg.Push(), sg.Text('Copyright (C) Blue Ridge Medical Center, 2023, 2024')] ]
-                window.close()
-                window = sg.Window(f'Alphabet Soup Acronym Lookup Tool {progver}', layout, return_keyboard_events=True, location=winLoc, finalize=True)
+                ]
+                window = make_window(menu_def, user_config, fList)
+                window['-IN-'].update('')
+                window['-BOX-CONTAINER-'].update(visible=False)
+                window['-OUT-'].update('')
                 list_element:sg.Listbox = window.Element('-BOX-')           # store listbox element for easier access and to get to docstrings
                 prediction_list, input_text, sel_item = [], "", 0
-                window.BringToFront()
-                window['-OUT-'].update("")
                 window['-IN-'].set_focus()
+                window.BringToFront()
                 
     
     window.close()
@@ -330,4 +310,7 @@ if __name__ == '__main__':
     v 1.03(g)       : 240319    : Reverted to manual list of themes. It keeps the list selectable under all relevant
                                 : operating systems instead of going off screen and becoming unselectable.
     v 1.03(h)       : 240319    : Added license key for PiSimpleGUI 5.0
+    v 1.03(i)       : 240323    : Refactored to use make_window() function, eliminating the need to duplicate code to make theme changes
+                                : immediate. 
+                                : Identified issue that Escape key is not recognized by event loop on MacOSX -- need to test on Linux.
 """
