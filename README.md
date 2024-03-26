@@ -59,6 +59,8 @@ jfreivald@brmedical.com
 
 ## Version History
 
+* v 1.03(k)
+    * Fixed the placement of the PySimpleGUI license key (had to be before the import statement).
 * v 1.03(j)
     * Added BRMC colors based theme
 * v 1.03(i)
