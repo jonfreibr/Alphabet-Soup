@@ -20,7 +20,7 @@ import pickle
 from datetime import datetime
 import pytz
 
-progver = 'v 1.03(j)'
+progver = 'v 1.03(k)'
 mainTheme = 'Kayak'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
@@ -326,4 +326,5 @@ if __name__ == '__main__':
                                 : immediate. 
                                 : Identified issue that Escape key is not recognized by event loop on MacOSX -- need to test on Linux.
     v 1.03(j)       : 240325    : Added BRMC colors theme.
+    v 1.03(k)       : 240326    : Corrected placement of license key to prior to import.
 """
