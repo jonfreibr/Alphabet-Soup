@@ -65,7 +65,7 @@ jfreivald@brmedical.com
     * Added BRMC colors based theme
 * v 1.03(i)
     * Refactored theme management code to utilize a make_window() function, eliminating much redundant code in respawning
-    the window when the theme changes. Theme changes are still immediate.
+    the window when the theme changes. Theme changes are still immediate. Also made window resizeable.
 * v 1.03(h)
     * Added license key for and tested with PiSimpleGUI 5.0
 * v 1.03(g)

@@ -323,7 +323,7 @@ if __name__ == '__main__':
                                 : operating systems instead of going off screen and becoming unselectable.
     v 1.03(h)       : 240319    : Added license key for PiSimpleGUI 5.0
     v 1.03(i)       : 240323    : Refactored to use make_window() function, eliminating the need to duplicate code to make theme changes
-                                : immediate. 
+                                : immediate. Also made window resizeable.
                                 : Identified issue that Escape key is not recognized by event loop on MacOSX -- need to test on Linux.
     v 1.03(j)       : 240325    : Added BRMC colors theme.
     v 1.03(k)       : 240326    : Corrected placement of license key to prior to import.
