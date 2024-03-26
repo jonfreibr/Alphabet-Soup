@@ -20,12 +20,6 @@ import pickle
 from datetime import datetime
 import pytz
 
-progver = 'v 1.03(k)'
-mainTheme = 'Kayak'
-errorTheme = 'HotDogStand'
-config_file = (f'{os.path.expanduser("~")}/as_config.dat')
-tz_NY = pytz.timezone('America/New_York')
-
 BRMC = {'BACKGROUND': '#73afb6',
                  'TEXT': '#00446a',
                  'INPUT': '#ffcf01',
@@ -37,6 +31,11 @@ BRMC = {'BACKGROUND': '#73afb6',
                  }
 sg.theme_add_new('BRMC', BRMC)
 
+progver = 'v 1.03(k)'
+mainTheme = 'BRMC'
+errorTheme = 'HotDogStand'
+config_file = (f'{os.path.expanduser("~")}/as_config.dat')
+tz_NY = pytz.timezone('America/New_York')
 
 theme_list = ['BRMC', 'BlueMono', 'BluePurple', 'BrightColors', 'DarkAmber', 'DarkBlue3', 'DarkGreen', 'DarkGreen6',
     'DarkGrey4', 'DarkGrey5', 'DarkTeal1', 'Green', 'GreenMono', 'GreenTan', 'Kayak', 'LightBlue1', 'LightBlue2',
@@ -326,5 +325,5 @@ if __name__ == '__main__':
                                 : immediate. Also made window resizeable.
                                 : Identified issue that Escape key is not recognized by event loop on MacOSX -- need to test on Linux.
     v 1.03(j)       : 240325    : Added BRMC colors theme.
-    v 1.03(k)       : 240326    : Corrected placement of license key to prior to import.
+    v 1.03(k)       : 240326    : Corrected placement of license key to prior to import. Made the BRMC theme the default.
 """
