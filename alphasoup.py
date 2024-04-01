@@ -31,7 +31,7 @@ BRMC = {'BACKGROUND': '#73afb6',
                  }
 sg.theme_add_new('BRMC', BRMC)
 
-progver = 'v 1.03(l)'
+progver = 'v 1.03(m)'
 mainTheme = 'BRMC'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
@@ -90,6 +90,7 @@ def get_data(args):
             definition = currentSheet[cellB].value
             aList.append(acronym)
             dList.append([acronym, definition])
+    theFile.close()
     return sorted(unique_list(aList)), sorted(dList), updated
 
 # --------------------------------------------------
@@ -333,4 +334,5 @@ if __name__ == '__main__':
     v 1.03(j)       : 240325    : Added BRMC colors theme.
     v 1.03(k)       : 240326    : Corrected placement of license key to prior to import. Made the BRMC theme the default.
     v 1.03(l)       : 240328    : Window now remembers size between sessions.
+    v 1.03(m)       : 240401    : Added explicit file close.
 """
