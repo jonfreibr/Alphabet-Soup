@@ -31,7 +31,7 @@ BRMC = {'BACKGROUND': '#73afb6',
                  }
 sg.theme_add_new('BRMC', BRMC)
 
-progver = 'v 1.03(m)'
+progver = 'v 1.03(n)'
 mainTheme = 'BRMC'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
@@ -167,10 +167,6 @@ def make_window(menu_def, user_config, fList):
         winLoc = user_config['winLoc']
     else:
         winLoc = (2, 2)
-    if 'winSize' in user_config:
-        winSize = user_config['winSize']
-    else:
-        winSize = (900, 100)
 
     input_width = 20
     num_items_to_show = 5
@@ -181,11 +177,11 @@ def make_window(menu_def, user_config, fList):
     layout = [  [sg.Menu(menu_def, text_color='black', font='SYSTEM_DEFAULT', pad=(10,10))],
                 [sg.Input(size=(input_width, 1), enable_events=True, key='-IN-'), sg.Listbox(values = fList, size=(100, num_defs_to_show), key='-OUT-')],
                 [sg.pin(sg.Col([[sg.Listbox(values=[], size=(input_width, num_items_to_show), enable_events=True, key='-BOX-',
-                                    select_mode=sg.LISTBOX_SELECT_MODE_SINGLE, no_scrollbar=True)]],
+                                    select_mode=sg.LISTBOX_SELECT_MODE_SINGLE)]],
                        key='-BOX-CONTAINER-', pad=(0, 0), visible=False))],
                 [sg.Button('Quit'), sg.Push(), sg.Text('Copyright (C) Blue Ridge Medical Center, 2023, 2024')] ]
     
-    return sg.Window(f'Alphabet Soup Acronym Lookup Tool {progver}', layout, return_keyboard_events=True, location=winLoc, size=winSize, resizable=True, finalize=True)
+    return sg.Window(f'Alphabet Soup Acronym Lookup Tool {progver}', layout, return_keyboard_events=True, location=winLoc, finalize=True)
 
 
 # --------------------------------------------------
@@ -222,18 +218,16 @@ def find_acronym():
         except:
             pass
             
-        window['-OUT-'].expand(expand_x=True, expand_y=True, expand_row=True)
+        # window['-OUT-'].expand(expand_x=True, expand_y=True, expand_row=True)
         event, values = window.read()
     
         winLoc = window.CurrentLocation()
-        winSize = window.Size
 
         # print(event)
 
         if event in (sg.WINDOW_CLOSED, 'Quit'): # if user closes window
             if event == 'Quit':     # If they "x-out" of the window, there is an error trying to get window.CurrentLocation()
                 user_config['winLoc'] = winLoc
-                user_config['winSize'] = winSize
                 write_user_settings(user_config)
             break
         elif event.startswith('Escape'):
@@ -335,4 +329,5 @@ if __name__ == '__main__':
     v 1.03(k)       : 240326    : Corrected placement of license key to prior to import. Made the BRMC theme the default.
     v 1.03(l)       : 240328    : Window now remembers size between sessions.
     v 1.03(m)       : 240401    : Added explicit file close.
+    v 1.03(n)       : 240402    : Backed out resizeable windows due to inconsistent state it could leave the display in (no Quit button, etc.)
 """
