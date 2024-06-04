@@ -31,11 +31,12 @@ BRMC = {'BACKGROUND': '#73afb6',
                  }
 sg.theme_add_new('BRMC', BRMC)
 
-progver = 'v 1.03(n)'
+progver = 'v 1.03(o)'
 mainTheme = 'BRMC'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
 tz_NY = pytz.timezone('America/New_York')
+corrections_to = 'jfreivald@brmedical.com'
 
 theme_list = ['BRMC', 'BlueMono', 'BluePurple', 'BrightColors', 'DarkAmber', 'DarkBlue3', 'DarkGreen', 'DarkGreen6',
     'DarkGrey4', 'DarkGrey5', 'DarkTeal1', 'Green', 'GreenMono', 'GreenTan', 'Kayak', 'LightBlue1', 'LightBlue2',
@@ -179,7 +180,7 @@ def make_window(menu_def, user_config, fList):
                 [sg.pin(sg.Col([[sg.Listbox(values=[], size=(input_width, num_items_to_show), enable_events=True, key='-BOX-',
                                     select_mode=sg.LISTBOX_SELECT_MODE_SINGLE)]],
                        key='-BOX-CONTAINER-', pad=(0, 0), visible=False))],
-                [sg.Button('Quit'), sg.Push(), sg.Text('Copyright © Blue Ridge Medical Center, 2023, 2024')] ]
+                [sg.Button('Quit'), sg.Push(), sg.Text('Send corrections or updates to: '), sg.Text(corrections_to), sg.Push(), sg.Text('Copyright © Blue Ridge Medical Center, 2023, 2024')] ]
     
     return sg.Window(f'Alphabet Soup Acronym Lookup Tool {progver}', layout, return_keyboard_events=True, location=winLoc, finalize=True)
 
@@ -330,4 +331,5 @@ if __name__ == '__main__':
     v 1.03(l)       : 240328    : Window now remembers size between sessions.
     v 1.03(m)       : 240401    : Added explicit file close.
     v 1.03(n)       : 240402    : Backed out resizeable windows due to inconsistent state it could leave the display in (no Quit button, etc.)
+    v 1.03(o)       : 240604    : Added email to display for updates or corrections.
 """
