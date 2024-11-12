@@ -31,7 +31,7 @@ BRMC = {'BACKGROUND': '#73afb6',
                  }
 sg.theme_add_new('BRMC', BRMC)
 
-progver = 'v 1.03(o)'
+progver = 'v 1.03(p)'
 mainTheme = 'BRMC'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
@@ -55,7 +55,7 @@ def get_args():
 		help='The soup. (source spreadsheet)',
 		metavar='filename',
 		type=str,
-		default='//brmc-fs2012.int.brmedical.com/STAFF/Jon/Administrative/BRMC Acronyms.xlsx')
+		default='//brmc-fs2012.int.brmedical.com/STAFF/_BRMCApps/Alphabet Soup/BRMC Acronyms.xlsx')
 
 	args = parser.parse_args()
 
@@ -332,4 +332,5 @@ if __name__ == '__main__':
     v 1.03(m)       : 240401    : Added explicit file close.
     v 1.03(n)       : 240402    : Backed out resizeable windows due to inconsistent state it could leave the display in (no Quit button, etc.)
     v 1.03(o)       : 240604    : Added email to display for updates or corrections.
+    v 1.03(p)       : 241112    : Moved default source spreadsheet location.
 """
