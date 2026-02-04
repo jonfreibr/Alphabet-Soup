@@ -3,19 +3,31 @@ setlocal enabledelayedexpansion
 title Install Alphabet Soup Acronym Tool
 echo Sourcing from: %~dp0
 
+set "TARGET_VER=3.11.5"
+set "PYTHON_SOURCE_DIR=Python311"
+
 :: Prevent early exit on errors
 set "ERRORFLAG=0"
 
 echo Checking for existing Python installation...
 python --version >nul 2>&1
 if %errorlevel% neq 0 (
-    echo Python not found. Installing Python 3.11.5...
-    "%~dp0\python-3.11.5-amd64.exe" /passive
-    set "PYTHON_PATH=%LocalAppData%\Programs\Python\Python311\python.exe"
+    echo Python not found.
+    set "INSTALL=TRUE"
 ) else (
     for /f "tokens=2 delims= " %%a in ('python --version 2^>^&1') do set "VERSION=%%a"
-    echo Found Python version: !VERSION!
-    set "PYTHON_PATH=python"
+    if !VERSION! equ !TARGET_VER! (
+	echo Python %TARGET_VER% already installed
+	set "INSTALL=FALSE"
+    ) else (
+	echo Python !VERSION! installed. Installing required version %TARGET_VER%
+	set "INSTALL=TRUE"
+    )
+)
+
+if "%INSTALL%" equ "TRUE" (
+	"%~dp0\python-3.11.5-amd64.exe" /passive
+	set "PYTHON_PATH=%LocalAppData%\Programs\Python\%PYTHON_SOURCE_DIR%\python.exe"
 )
 
 set "PROJECT_DIR=%USERPROFILE%\ASoup"
