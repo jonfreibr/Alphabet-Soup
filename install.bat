@@ -26,7 +26,7 @@ if %errorlevel% neq 0 (
 )
 
 if "%INSTALL%" equ "TRUE" (
-	"%~dp0\python-3.11.5-amd64.exe" /passive
+	"%~dp0\python-%TARGET_VER%-amd64.exe" /passive
 	set "PYTHON_PATH=%LocalAppData%\Programs\Python\%PYTHON_SOURCE_DIR%\python.exe"
 )
 

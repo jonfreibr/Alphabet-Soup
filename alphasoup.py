@@ -78,7 +78,7 @@ def get_data(args):
     theFile = openpyxl.load_workbook(args.file)
 
     m_dt = os.path.getmtime(args.file)
-    updated = datetime.fromtimestamp(m_dt).strftime("%m/%d/%y @ %H:%M")
+    updated = datetime.fromtimestamp(m_dt)
     
     currentSheet = theFile['AlphabetSoup']
     acronym = ''
@@ -213,11 +213,11 @@ def find_acronym():
 
     while True:
         try:
-            if updated != datetime.fromtimestamp(os.path.getmtime(args.file)).strftime("%m/%d/%y @ %H:%M"):
+            if updated != datetime.fromtimestamp(os.path.getmtime(args.file)):
                 aList, dList, updated = get_data(args)
                 fList = []
         except:
-            pass
+            sg.popup("Data Error", "Problem updating from spreadsheet")
             
         # window['-OUT-'].expand(expand_x=True, expand_y=True, expand_row=True)
         event, values = window.read()
