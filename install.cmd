@@ -53,7 +53,6 @@ call python -m pip install --upgrade pip
 if exist "%~dp0\requirements.txt" (
     echo Installing required Python packages in venv...
     call python -m pip install -r "%~dp0\requirements.txt"
-    :: call python -m pip install -i https://PySimpleGUI.net/install PySimpleGUI
     if %errorlevel% neq 0 (
         echo ERROR: Failed to install dependencies.
         set "ERRORFLAG=1"

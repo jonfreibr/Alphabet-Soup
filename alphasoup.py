@@ -2,7 +2,7 @@
 """
 Program : Alphabet Soup
 Author  : Jon Freivald <jfreivald@brmedical.com>
-        : Copyright © Blue Ridge Medical Center, 2023, 2024. All Rights Reserved.
+        : Copyright © Blue Ridge Medical Center, 2023, 2024, 2026. All Rights Reserved.
         : License: GNU GPL Version 3
 Date    : 2023-10-20
 Purpose : Acronym Lookup Tool
@@ -177,7 +177,7 @@ def make_window(menu_def, user_config, fList):
                 [sg.pin(sg.Col([[sg.Listbox(values=[], size=(input_width, num_items_to_show), enable_events=True, key='-BOX-',
                                     select_mode=sg.LISTBOX_SELECT_MODE_SINGLE)]],
                        key='-BOX-CONTAINER-', pad=(0, 0), visible=False))],
-                [sg.Button('Quit'), sg.Push(), sg.Text('Send corrections or updates to: '), sg.Text(corrections_to), sg.Push(), sg.Text('Copyright © Blue Ridge Medical Center, 2023, 2024')] ]
+                [sg.Button('Quit'), sg.Push(), sg.Text('Send corrections or updates to: '), sg.Text(corrections_to), sg.Push(), sg.Text('Copyright © Blue Ridge Medical Center, 2023, 2024, 2026')] ]
     
     return sg.Window(f'Alphabet Soup Acronym Lookup Tool {progver}', layout, return_keyboard_events=True, location=winLoc, finalize=True)
 
