@@ -3,8 +3,8 @@ setlocal enabledelayedexpansion
 title Install Alphabet Soup Acronym Tool
 echo Sourcing from: %~dp0
 
-set "TARGET_VER=3.11.5"
-set "PYTHON_SOURCE_DIR=Python311"
+set "TARGET_VER=3.14.0"
+set "PYTHON_SOURCE_DIR=Python314"
 
 :: Prevent early exit on errors
 set "ERRORFLAG=0"
@@ -18,6 +18,7 @@ if %errorlevel% neq 0 (
     for /f "tokens=2 delims= " %%a in ('python --version 2^>^&1') do set "VERSION=%%a"
     if !VERSION! equ !TARGET_VER! (
 	echo Python %TARGET_VER% already installed
+        set "PYTHON_PATH=%LocalAppData%\Programs\Python\%PYTHON_SOURCE_DIR%\python.exe"
 	set "INSTALL=FALSE"
     ) else (
 	echo Python !VERSION! installed. Installing required version %TARGET_VER%
@@ -91,7 +92,7 @@ if %errorlevel% neq 0 (
 )
 echo.
 
-echo Launching Insurance Query Tool...
+echo Launching Alphabet Soup...
 start "" "%SHORTCUT_PATH%"
 echo.
 
