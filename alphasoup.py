@@ -16,6 +16,9 @@ import os
 import pickle
 from datetime import datetime
 import pytz
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 BRMC = {'BACKGROUND': '#73afb6',
                  'TEXT': '#00446a',
@@ -28,7 +31,7 @@ BRMC = {'BACKGROUND': '#73afb6',
                  }
 sg.theme_add_new('BRMC', BRMC)
 
-progver = 'v 1.03(q)'
+progver = 'v 1.04'
 mainTheme = 'BRMC'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
@@ -159,6 +162,67 @@ def check_theme(theme, user_config, winLoc):
     window.close()
 
 # --------------------------------------------------
+def send_update(user_config):
+
+    # Configuration
+    message = MIMEMultipart()
+    sender_email = "alphabetsoup4038@gmail.com"
+    receiver_email = "jfreivald@brmedical.com"
+    # Use the 16-character Google App Password
+    password = "aouyvpagbcprcrkf" 
+
+    if 'winLoc' in user_config:
+        winLoc = user_config['winLoc']
+    else:
+        winLoc = (2, 2)
+
+    sg.theme(user_config['Theme'])
+
+    layout = [[sg.Radio('Addition', 'GROUP1', key='-ADD-', default=True), sg.Radio('Correction', 'GROUP1', key = '-FIX-')],
+              [sg.Text('Acronym'), sg.Input(key='-ACRONYM-')],
+              [sg.Text('Definition'), sg.Input(key='-ACRONYM_DEF-')],
+              [sg.Button('Send'), sg.Button('Quit')]]
+    
+    window = sg.Window('Acronymn update submission', layout, location=winLoc, finalize=True)
+    window.BringToFront()
+    event, values = window.read()
+
+    if event in (sg.WINDOW_CLOSED, 'Quit'): # if user closes window
+        print("Window closed")
+        window.close()
+    elif event == 'Send':
+        if not values['-ACRONYM-'] or not values['-ACRONYM_DEF-']:
+            sg.Popup("Error", "Both the Acronym and Definition fields must contain values")
+            window.close()
+            return
+        # Create the email message
+        if values['-ADD-']:
+            message["Subject"] = "Alphabet Soup Addition"
+            mode = "Add"
+        else:
+            message["Subject"] = "Alphabet Soup Correction"
+            mode = "Correct"
+        message["From"] = sender_email
+        message["To"] = receiver_email
+        
+        body = f"Alphabet Soup {progver} submission: {mode} {values['-ACRONYM-']},  {values['-ACRONYM_DEF-']}"
+        message.attach(MIMEText(body, "plain"))
+
+        try:
+            # Connect to Gmail's SMTP server
+            # Port 587 is standard for TLS/STARTTLS connections
+            server = smtplib.SMTP("smtp.gmail.com", 587)
+            server.starttls() # Secure the connection
+            
+            # Login and send
+            server.login(sender_email, password)
+            server.sendmail(sender_email, receiver_email, message.as_string())
+        except Exception as e:
+            sg.Popup("Error", f"{e}")
+
+        window.close()
+
+# --------------------------------------------------
 def make_window(menu_def, user_config, fList):
 
     if 'winLoc' in user_config:
@@ -177,7 +241,7 @@ def make_window(menu_def, user_config, fList):
                 [sg.pin(sg.Col([[sg.Listbox(values=[], size=(input_width, num_items_to_show), enable_events=True, key='-BOX-',
                                     select_mode=sg.LISTBOX_SELECT_MODE_SINGLE)]],
                        key='-BOX-CONTAINER-', pad=(0, 0), visible=False))],
-                [sg.Button('Quit'), sg.Push(), sg.Text('Send corrections or updates to: '), sg.Text(corrections_to), sg.Push(), sg.Text('Copyright © Blue Ridge Medical Center, 2023, 2024, 2026')] ]
+                [sg.Button('Quit'), sg.Push(), sg.Text('Send corrections or updates to: '), sg.Button(corrections_to), sg.Push(), sg.Text('Copyright © Blue Ridge Medical Center, 2023, 2024, 2026')] ]
     
     return sg.Window(f'Alphabet Soup Acronym Lookup Tool {progver}', layout, return_keyboard_events=True, location=winLoc, finalize=True)
 
@@ -270,6 +334,9 @@ def find_acronym():
         elif event == '-BOX-':
             window['-IN-'].update(value=values['-BOX-'])
             window['-BOX-CONTAINER-'].update(visible=False)
+
+        elif event == corrections_to:
+            send_update(user_config)
             
         elif event in menu_dispatcher:
             old_theme = user_config['Theme']
@@ -332,4 +399,6 @@ if __name__ == '__main__':
     v 1.03(p)       : 241112    : Moved default source spreadsheet location.
     v 1.03(q)       : 260206    : PySimpleGUI stopped working (python 3.14.0?). Migrated to PySimpleGUI-4-foss. Removed PySimpleGUI v5 distribution key. 
                                 : There is a file sharing error trying to edit the spreadsheet with anything python > 3.11.5 that I have yet to figure out.
+                                : Duh -- update your dependencies -- amazing -- errors go away...
+    v 1.04          : 260528    : Updated to allow direct submission of additions and corrections via smtp.
 """
