@@ -400,5 +400,5 @@ if __name__ == '__main__':
     v 1.03(q)       : 260206    : PySimpleGUI stopped working (python 3.14.0?). Migrated to PySimpleGUI-4-foss. Removed PySimpleGUI v5 distribution key. 
                                 : There is a file sharing error trying to edit the spreadsheet with anything python > 3.11.5 that I have yet to figure out.
                                 : Duh -- update your dependencies -- amazing -- errors go away...
-    v 1.04          : 260528    : Updated to allow direct submission of additions and corrections via smtp.
+    v 1.04          : 260528    : Updated to allow direct submission of additions and corrections via smtp. The corrections-to email is now a button.
 """
