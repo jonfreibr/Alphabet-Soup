@@ -17,6 +17,7 @@ import pickle
 from datetime import datetime
 import pytz
 import smtplib
+import sys
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
@@ -31,7 +32,7 @@ BRMC = {'BACKGROUND': '#73afb6',
                  }
 sg.theme_add_new('BRMC', BRMC)
 
-progver = 'v 1.04'
+progver = 'v 1.04b'
 mainTheme = 'BRMC'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
@@ -166,7 +167,8 @@ def send_update(user_config):
 
     # Configuration
     message = MIMEMultipart()
-    sender_email = "alphabetsoup4038@gmail.com"
+    sender_login = "alphabetsoup4038@gmail.com"
+    sender_email = f"Alphabet Soup Submission <{sender_login}>"
     receiver_email = "jfreivald@brmedical.com"
     # Use the 16-character Google App Password
     password = "aouyvpagbcprcrkf" 
@@ -215,7 +217,7 @@ def send_update(user_config):
             server.starttls() # Secure the connection
             
             # Login and send
-            server.login(sender_email, password)
+            server.login(sender_login, password)
             server.sendmail(sender_email, receiver_email, message.as_string())
         except Exception as e:
             sg.Popup("Error", f"{e}")
@@ -243,7 +245,7 @@ def make_window(menu_def, user_config, fList):
                        key='-BOX-CONTAINER-', pad=(0, 0), visible=False))],
                 [sg.Button('Quit'), sg.Push(), sg.Text('Send corrections or updates to: '), sg.Button(corrections_to), sg.Push(), sg.Text('Copyright © Blue Ridge Medical Center, 2023, 2024, 2026')] ]
     
-    return sg.Window(f'Alphabet Soup Acronym Lookup Tool {progver}', layout, return_keyboard_events=True, location=winLoc, finalize=True)
+    return sg.Window(f'Alphabet Soup Acronym Lookup Tool {progver}', layout, return_keyboard_events=True, location=winLoc, icon="soup.ico", finalize=True)
 
 
 # --------------------------------------------------
@@ -361,7 +363,12 @@ def find_acronym():
 
 # --------------------------------------------------
 if __name__ == '__main__':
-	find_acronym()
+    if sys.platform == 'win32':
+        import ctypes
+        myappid=f"BRMC.AlphabetSoup.{progver}"
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+
+    find_acronym()
         
 """Change log:
 
@@ -401,4 +408,6 @@ if __name__ == '__main__':
                                 : There is a file sharing error trying to edit the spreadsheet with anything python > 3.11.5 that I have yet to figure out.
                                 : Duh -- update your dependencies -- amazing -- errors go away...
     v 1.04          : 260528    : Updated to allow direct submission of additions and corrections via smtp. The corrections-to email is now a button.
+    v 1.04a         : 260612    : Corrected "no real name" error in SMTP headers.
+    v 1.04b         : 260630    : Updated to display app icon on window title and Windows task bar.
 """

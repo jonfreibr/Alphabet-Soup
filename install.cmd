@@ -65,6 +65,7 @@ if exist "%~dp0\requirements.txt" (
 
 echo Copying files
 copy /y "%~dp0\alphasoup.py" %PROJECT_DIR%
+copy /y "%~dp0\soup.ico" %PROJECT_DIR%
 echo Finished copying files
 
 echo Deactivating virtual environment...
@@ -74,7 +75,7 @@ echo Creating desktop shortcut...
 set "SHORTCUT_PATH=%USERPROFILE%\Desktop\AlphaSoup.lnk"
 set "TARGET_PATH=%PROJECT_DIR%\alphasoup.py"
 set "WORKING_DIR=%PROJECT_DIR%"
-set "ICON_PATH=%~dp0\icon.ico"
+set "ICON_PATH=%PROJECT_DIR%\soup.ico"
 
 powershell -NoLogo -NoProfile -ExecutionPolicy Bypass -Command ^
   "$s=(New-Object -COM WScript.Shell).CreateShortcut('%SHORTCUT_PATH%');" ^
