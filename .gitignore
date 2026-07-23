@@ -153,3 +153,4 @@ cython_debug/
 
 # Random files I put in there
 test.py
+Thumbs.db
