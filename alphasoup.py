@@ -32,7 +32,7 @@ BRMC = {'BACKGROUND': '#73afb6',
                  }
 sg.theme_add_new('BRMC', BRMC)
 
-progver = 'v 1.04b'
+progver = 'v 1.04c'
 mainTheme = 'BRMC'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
@@ -82,6 +82,7 @@ def get_data(args):
     updated = datetime.fromtimestamp(m_dt)
     
     currentSheet = theFile['AlphabetSoup']
+    acronym_count = currentSheet.max_row - 4 # Data starts on row 5
     acronym = ''
     for row in range(5, currentSheet.max_row + 1): # start @ 5 because that's the first row with actual data
         cellA = (f'A{row}')
@@ -93,7 +94,7 @@ def get_data(args):
             aList.append(acronym)
             dList.append([acronym, definition])
     theFile.close()
-    return sorted(unique_list(aList)), sorted(dList), updated
+    return sorted(unique_list(aList)), sorted(dList), updated, acronym_count
 
 # --------------------------------------------------
 def filter_data(acronym, dList):
@@ -225,7 +226,7 @@ def send_update(user_config):
         window.close()
 
 # --------------------------------------------------
-def make_window(menu_def, user_config, fList):
+def make_window(menu_def, user_config, fList, acronym_count):
 
     if 'winLoc' in user_config:
         winLoc = user_config['winLoc']
@@ -245,7 +246,7 @@ def make_window(menu_def, user_config, fList):
                        key='-BOX-CONTAINER-', pad=(0, 0), visible=False))],
                 [sg.Button('Quit'), sg.Push(), sg.Text('Send corrections or updates to: '), sg.Button(corrections_to), sg.Push(), sg.Text('Copyright © Blue Ridge Medical Center, 2023, 2024, 2026')] ]
     
-    return sg.Window(f'Alphabet Soup Acronym Lookup Tool {progver}', layout, return_keyboard_events=True, location=winLoc, icon="soup.ico", finalize=True)
+    return sg.Window(f'Alphabet Soup Acronym Lookup Tool {progver} -- {acronym_count} acronyms loaded', layout, return_keyboard_events=True, location=winLoc, icon="soup.ico", finalize=True)
 
 
 # --------------------------------------------------
@@ -265,9 +266,9 @@ def find_acronym():
     aList = [] # Acronym List
     dList = [] # Definition List
     fList = [] # Filtered List
-    aList, dList, updated = get_data(args)
+    aList, dList, updated, acronym_count = get_data(args)
 
-    window = make_window(menu_def, user_config, fList)
+    window = make_window(menu_def, user_config, fList, acronym_count)
 
     list_element:sg.Listbox = window.Element('-BOX-')           # store listbox element for easier access and to get to docstrings
     prediction_list, input_text, sel_item = [], "", 0
@@ -410,4 +411,5 @@ if __name__ == '__main__':
     v 1.04          : 260528    : Updated to allow direct submission of additions and corrections via smtp. The corrections-to email is now a button.
     v 1.04a         : 260612    : Corrected "no real name" error in SMTP headers.
     v 1.04b         : 260630    : Updated to display app icon on window title and Windows task bar.
+    v 1.04c         : 260724    : Added count of acronyms loaded to title bar.
 """
