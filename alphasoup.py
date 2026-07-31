@@ -32,7 +32,7 @@ BRMC = {'BACKGROUND': '#73afb6',
                  }
 sg.theme_add_new('BRMC', BRMC)
 
-progver = 'v 1.04c'
+progver = 'v 1.04d'
 mainTheme = 'BRMC'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
@@ -278,13 +278,15 @@ def find_acronym():
     while True:
         try:
             if updated != datetime.fromtimestamp(os.path.getmtime(args.file)):
-                aList, dList, updated = get_data(args)
+                aList, dList, updated, acronym_count = get_data(args)
                 fList = []
+                window.set_title(f'Alphabet Soup Acronym Lookup Tool {progver} -- {acronym_count} acronyms loaded')
+                # window = make_window(menu_def, user_config, fList, acronym_count)
         except:
             sg.popup("Data Error", "Problem updating from spreadsheet")
             
         # window['-OUT-'].expand(expand_x=True, expand_y=True, expand_row=True)
-        event, values = window.read()
+        event, values = window.read(timeout=5000)
     
         winLoc = window.CurrentLocation()
 
@@ -412,4 +414,5 @@ if __name__ == '__main__':
     v 1.04a         : 260612    : Corrected "no real name" error in SMTP headers.
     v 1.04b         : 260630    : Updated to display app icon on window title and Windows task bar.
     v 1.04c         : 260724    : Added count of acronyms loaded to title bar.
+    v 1.04d         : 260731    : Fixed refresh error.
 """
