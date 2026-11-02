@@ -32,7 +32,7 @@ BRMC = {'BACKGROUND': '#73afb6',
                  }
 sg.theme_add_new('BRMC', BRMC)
 
-progver = 'v 1.04d'
+progver = 'v 1.04e'
 mainTheme = 'BRMC'
 errorTheme = 'HotDogStand'
 config_file = (f'{os.path.expanduser("~")}/as_config.dat')
@@ -298,6 +298,7 @@ def find_acronym():
                 write_user_settings(user_config)
             break
         elif event.startswith('Escape'):
+            window.set_title(f'Alphabet Soup Acronym Lookup Tool {progver} -- {acronym_count} acronyms loaded')
             window['-IN-'].update('')
             window['-BOX-CONTAINER-'].update(visible=False)
             window['-OUT-'].update('')
@@ -316,6 +317,10 @@ def find_acronym():
                 window['-BOX-CONTAINER-'].update(visible=False)
                 fList = filter_data(str(values['-BOX-'][0]), dList)
                 window['-OUT-'].update(sorted(fList))
+                if len(fList) == 1:
+                    window.set_title(f'Alphabet Soup Acronym Lookup Tool {progver} -- {acronym_count} acronyms loaded, 1 definition found')
+                else:
+                    window.set_title(f'Alphabet Soup Acronym Lookup Tool {progver} -- {acronym_count} acronyms loaded, {len(fList)} definitions found')
             
         elif event == '-IN-':
             text = values['-IN-'].lower()
@@ -415,4 +420,5 @@ if __name__ == '__main__':
     v 1.04b         : 260630    : Updated to display app icon on window title and Windows task bar.
     v 1.04c         : 260724    : Added count of acronyms loaded to title bar.
     v 1.04d         : 260731    : Fixed refresh error.
+    v 1.04e         : 260731    : Added count of definitions found to title bar.
 """
